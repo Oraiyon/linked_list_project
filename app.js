@@ -140,7 +140,7 @@ class LinkedList {
   }
 
   removeAt(index) {
-    let removedNode = null;
+    let removedNode = this.head;
     if (index < 0 || index >= this.size) {
       console.log("Invalid Index");
     } else if (index === 0) {

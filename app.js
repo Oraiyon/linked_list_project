@@ -90,9 +90,9 @@ class LinkedList {
 
   find(value) {
     let curr = this.head;
-    while (curr) {
+    for (let i = 0; i < this.size - 1; i++) {
       if (curr.value === value) {
-        console.log(curr);
+        console.log(`${value} Is Index ${i}`);
         return;
       }
       curr = curr.next;

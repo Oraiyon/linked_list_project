@@ -36,37 +36,47 @@ class LinkedList {
   }
 
   getSize() {
-    return this.size;
+    console.log(`List Size ${this.size}`);
   }
 
   getHead() {
-    console.log(this.head);
+    const curr = this.head;
+    for (let i = 0; i <= 0; i++) {
+      console.log(curr);
+    }
   }
 
   getTail() {
     let curr = this.head;
-    while (curr.next) {
+    for (let i = 0; i < this.size - 1; i++) {
       curr = curr.next;
     }
     console.log(curr);
   }
 
-  getIndex(value) {
-    let curr = this.head;
-    const array = [];
-    while (curr) {
-      array.push(curr.value);
-      curr = curr.next;
-    }
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] === value) {
-        console.log(i);
-        return;
+  atIndex(index) {
+    if (index <= this.size - 1) {
+      let curr = this.head;
+      for (let i = 0; i < index; i++) {
+        curr = curr.next;
       }
+      console.log(curr);
+    } else {
+      console.log("Invalid Index");
     }
   }
 
-  containsItem(value) {
+  pop() {
+    let curr = this.head;
+    for (let i = 0; i < this.size - 2; i++) {
+      curr = curr.next;
+    }
+    console.log(`Removed ${curr.next.value}`);
+    curr.next = null;
+    this.size--;
+  }
+
+  contains(value) {
     let curr = this.head;
     while (curr) {
       if (curr.value === value) {
@@ -78,22 +88,21 @@ class LinkedList {
     console.log("False");
   }
 
-  findItem(value) {
+  find(value) {
     let curr = this.head;
     while (curr) {
       if (curr.value === value) {
         console.log(curr);
         return;
-      } else {
-        curr = curr.next;
       }
+      curr = curr.next;
     }
     console.log("Item Not Found");
   }
 
   print() {
     if (this.size === 0) {
-      console.log("Empty");
+      console.log("Empty List");
     } else {
       let curr = this.head;
       while (curr) {
@@ -102,135 +111,48 @@ class LinkedList {
       }
     }
   }
+
+  insertAt(value, index) {
+    if (index < 0 || index > this.size) {
+      console.log("Invalid Index");
+    } else if (index === 0) {
+      this.prepend(value);
+    } else if (index === this.size) {
+      this.append(value);
+    } else {
+      const node = new Node(value);
+      let curr = this.head;
+      for (let i = 0; i < index - 1; i++) {
+        curr = curr.next;
+      }
+      node.next = curr.next;
+      curr.next = node;
+      this.size++;
+    }
+  }
+
+  removeAt(index) {
+    let removedNode = this.head;
+    if (index < 0 || index >= this.size) {
+      console.log("Invalid Index");
+    } else if (index === 0) {
+      this.head = this.head.next;
+    } else {
+      let curr = this.head;
+      for (let i = 0; i < index - 1; i++) {
+        curr = curr.next;
+      }
+      removedNode = curr.next;
+      curr.next = removedNode.next;
+    }
+    this.size--;
+    console.log(`Removed ${removedNode.value} From Index ${index}`);
+  }
 }
 
 const list1 = new LinkedList();
-list1.prepend(1);
-list1.prepend(2);
+list1.prepend(10);
+list1.prepend(20);
 list1.append(0);
+list1.insertAt(30, 1);
 list1.print();
-
-//
-// factory function
-//
-
-const newNode = (value) => {
-  const next = null;
-  return { value, next };
-};
-
-const newLinkedList = () => {
-  let head = null;
-  let size = 0;
-
-  const append = (value) => {
-    const node = newNode(value);
-    if (size === 0) {
-      head = node;
-    } else {
-      let curr = head;
-      while (curr.next) {
-        curr = curr.next;
-      }
-      curr.next = node;
-    }
-    size++;
-  };
-
-  const prepend = (value) => {
-    const node = newNode(value);
-    if (size !== 0) {
-      node.next = head;
-    }
-    head = node;
-    size++;
-  };
-
-  const getSize = () => {
-    return size;
-  };
-
-  const getHead = () => {
-    console.log(head);
-  };
-
-  const getTail = () => {
-    let curr = head;
-    while (curr.next) {
-      curr = curr.next;
-    }
-    console.log(curr);
-  };
-
-  const getIndex = (value) => {
-    let curr = head;
-    const array = [];
-    while (curr) {
-      array.push(curr.value);
-      curr = curr.next;
-    }
-    for (let i = 0; i < array.length; i++) {
-      if (array[i] === value) {
-        console.log(i);
-        return;
-      }
-    }
-  };
-
-  const containsItem = (value) => {
-    let curr = head;
-    while (curr) {
-      if (curr.value === value) {
-        console.log("True");
-        return;
-      } else {
-        curr = curr.next;
-      }
-    }
-    console.log("False");
-  };
-
-  const findItem = (value) => {
-    let curr = head;
-    while (curr) {
-      if (curr.value === value) {
-        console.log(curr);
-        return;
-      } else {
-        curr = curr.next;
-      }
-    }
-    console.log("Item Not Found");
-  };
-
-  const print = () => {
-    if (size === 0) {
-      console.log("Empty");
-    }
-    let curr = head;
-    while (curr) {
-      console.log(curr.value);
-      curr = curr.next;
-    }
-  };
-
-  return {
-    head,
-    size,
-    append,
-    prepend,
-    getSize,
-    getHead,
-    getTail,
-    getIndex,
-    containsItem,
-    findItem,
-    print,
-  };
-};
-
-const list2 = newLinkedList();
-// list2.prepend(10);
-// list2.prepend(20);
-// list2.append(0);
-// list2.print();

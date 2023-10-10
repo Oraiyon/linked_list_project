@@ -67,12 +67,20 @@ class LinkedList {
   }
 
   pop() {
-    let curr = this.head;
-    for (let i = 0; i < this.size - 2; i++) {
-      curr = curr.next;
+    if (this.size === 0) {
+      console.log("Empty List");
+      return;
+    } else if (this.size === 1) {
+      console.log(`Popped ${this.head.value}`);
+      this.head = null;
+    } else {
+      let curr = this.head;
+      while (curr.next.next) {
+        curr = curr.next;
+      }
+      console.log(`Popped ${curr.next.value}`);
+      curr.next = null;
     }
-    console.log(`Removed ${curr.next.value}`);
-    curr.next = null;
     this.size--;
   }
 
@@ -132,7 +140,7 @@ class LinkedList {
   }
 
   removeAt(index) {
-    let removedNode = this.head;
+    let removedNode = null;
     if (index < 0 || index >= this.size) {
       console.log("Invalid Index");
     } else if (index === 0) {
